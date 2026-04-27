@@ -1,9 +1,30 @@
+<div align="center">
+
 # AIMAD
 
-> *"Jarvis from Iron Man isn't science fiction anymore, I'm building it from scratch ;)"*
+**A · I · M · A · D**
+
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-cyan.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688.svg)](https://fastapi.tiangolo.com)
+[![React](https://img.shields.io/badge/React-18-61DAFB.svg)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6.svg)](https://typescriptlang.org)
+[![Status](https://img.shields.io/badge/Status-Active%20Development-ff00a0.svg)](#)
+
+*"Jarvis from Iron Man isn't science fiction anymore, I'm building it from scratch ;)"*
+
+</div>
+
+---
 
 > [!CAUTION]
 > **Active development.** APIs, architecture, and interfaces may change at any time. Not production-stable.
+
+---
+
+## Preview
+
+![AIMAD UI](images/preview.png)
 
 ---
 
@@ -17,15 +38,15 @@ A personal AI assistant built from scratch — offline voice I/O, LLM reasoning,
 
 ## Tech Stack
 
-| Layer      | Technology                                       |
-|------------|--------------------------------------------------|
-| Backend    | Python 3.11+, FastAPI 0.111                      |
-| LLM        | LLM7.io (OpenAI-compatible adapter)              |
-| STT        | SpeechRecognition + pocketsphinx (offline)       |
-| TTS        | pyttsx3 (offline)                                |
-| Image AI   | Vision API via LLM adapter                       |
-| Frontend   | TypeScript, React 18, Vite                       |
-| Styling    | CSS Modules — cyberpunk dark theme               |
+| Layer | Technology |
+|---|---|
+| Backend | Python 3.11+, FastAPI 0.111 |
+| LLM | LLM7.io (OpenAI-compatible adapter) |
+| STT | SpeechRecognition + pocketsphinx (offline) |
+| TTS | pyttsx3 (offline) |
+| Image AI | Vision API via LLM adapter |
+| Frontend | TypeScript, React 18, Vite |
+| Styling | CSS Modules — cyberpunk dark theme |
 
 ---
 
@@ -38,15 +59,15 @@ git clone https://github.com/edujbarrios/aimad.git
 cd aimad
 ```
 
-### 2. Configure environment
+### 2. Configure
 
 ```bash
 cp backend/.env.example backend/.env
-# Edit backend/.env and fill in your API keys
 ```
 
-**`backend/.env`**
-```
+Edit `backend/.env`:
+
+```env
 LLM_PROVIDER=llm7
 LLM7_API_KEY=your_api_key
 LLM7_BASE_URL=https://api.llm7.io/v1
@@ -57,18 +78,11 @@ UPLOAD_DIR=uploads
 MAX_UPLOAD_SIZE_MB=10
 ```
 
-**`frontend/.env.local`** *(optional — defaults to localhost:8000)*
-```
-VITE_API_BASE_URL=http://localhost:8000
-```
-
 ### 3. Run
 
-**Single command (recommended):**
-
 ```bash
-npm install      # installs concurrently once
-npm run dev      # starts backend + frontend in parallel
+npm install   # one-time setup
+npm run dev   # starts backend + frontend together
 ```
 
 | Script | Action |
@@ -78,28 +92,10 @@ npm run dev      # starts backend + frontend in parallel
 | `npm run dev:frontend` | Frontend only |
 | `npm run setup` | Install all deps (pip + npm) |
 
-**Or with PowerShell (no Node required):**
+> **Windows alternative:** `.\dev.ps1` — no Node required, same result.
 
-```powershell
-.\dev.ps1
-```
-
-Both options give colour-coded logs. `Ctrl+C` stops everything.
-
-**Manual setup** (if you prefer separate terminals):
-
-```bash
-# Backend
-cd backend && python -m venv .venv && .venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn main:app --reload --port 8000
-
-# Frontend (separate terminal)
-cd frontend && npm install && npm run dev
-```
-
-- Backend: `http://localhost:8000` · Swagger: `http://localhost:8000/docs`
-- Frontend: `http://localhost:5173`
+- Backend API → `http://localhost:8000` · Swagger → `http://localhost:8000/docs`
+- Frontend → `http://localhost:5173`
 
 ---
 
@@ -115,10 +111,10 @@ AIMAD/
 │   ├── commands/            # Voice command handlers
 │   ├── models/              # Pydantic schemas
 │   ├── config/              # Environment & settings
-│   └── utils/               # Shared utilities
+│   └── utils/               # Shared utilities + event bus
 └── frontend/
     └── src/
-        ├── components/      # UI components
+        ├── components/      # UI components (Avatar, Chat, Voice, Image…)
         ├── pages/           # Page views
         ├── hooks/           # Custom React hooks
         ├── services/        # API client
@@ -128,13 +124,13 @@ AIMAD/
 
 ### Design Patterns
 
-| Pattern | Applied in |
+| Pattern | Where |
 |---|---|
-| **Adapter** | `adapters/` — swap LLM providers with no core changes |
+| **Adapter** | `adapters/` — swap LLM providers with zero core changes |
 | **Strategy** | TTS + STT engines — pluggable at runtime |
 | **Command** | `commands/` — each voice intent is an encapsulated object |
 | **Factory** | `LLMProviderFactory` — provider instantiation |
-| **Service Layer** | All business logic in `services/` |
+| **Service Layer** | All business logic isolated in `services/` |
 | **Repository/Config** | Env & key management in `config/` |
 | **Observer/Event bus** | `utils/events.py` — async state propagation |
 
@@ -144,12 +140,12 @@ AIMAD/
 
 | Method | Endpoint | Description |
 |---|---|---|
-| GET | `/health` | Health check |
-| POST | `/api/llm/prompt` | Send prompt to LLM |
-| POST | `/api/voice/command` | Execute a voice command |
-| POST | `/api/tts/speak` | Trigger TTS |
-| POST | `/api/image/analyze` | Upload image + get AI insight |
-| POST | `/api/assistant/orchestrate` | Full assistant orchestration |
+| `GET` | `/health` | Health check |
+| `POST` | `/api/llm/prompt` | Send prompt to LLM |
+| `POST` | `/api/voice/command` | Execute a voice command |
+| `POST` | `/api/tts/speak` | Trigger TTS |
+| `POST` | `/api/image/analyze` | Upload image + get AI insight |
+| `POST` | `/api/assistant/orchestrate` | Full assistant orchestration |
 
 ---
 
@@ -170,7 +166,7 @@ AIMAD/
 
 ## Contributing
 
-AIMAD is open source — all contributions welcome.
+AIMAD is fully open source — all contributions welcome.
 
 1. Fork the repo
 2. `git checkout -b feat/your-feature`
@@ -183,3 +179,4 @@ AIMAD is open source — all contributions welcome.
 ## License
 
 GNU AGPL v3.0 — strong copyleft. Any network deployment must release source code. Commercial hosting requires explicit permission. See [LICENSE](LICENSE).
+
