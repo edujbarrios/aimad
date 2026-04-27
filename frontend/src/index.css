@@ -1,0 +1,87 @@
+/* ── AIMAD Global Styles ─────────────────────────────────────────────────── */
+@import './theme/variables.css';
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: var(--clr-bg-deep);
+  color: var(--clr-text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  /* Subtle scanline texture */
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 245, 255, 0.015) 2px,
+    rgba(0, 245, 255, 0.015) 4px
+  );
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--clr-bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--clr-cyan-dim); border-radius: 3px; }
+
+/* Selection */
+::selection {
+  background: var(--clr-magenta);
+  color: #000;
+}
+
+/* Utility: neon text */
+.neon-cyan  { color: var(--clr-cyan);    text-shadow: var(--glow-cyan); }
+.neon-magenta { color: var(--clr-magenta); text-shadow: var(--glow-magenta); }
+.neon-gold  { color: var(--clr-gold);    text-shadow: var(--glow-gold); }
+
+/* Utility: panel */
+.panel {
+  background: var(--clr-bg-panel);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+}
+
+/* Utility: cyber button */
+.btn-cyber {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid var(--clr-cyan);
+  background: transparent;
+  color: var(--clr-cyan);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition), box-shadow var(--transition);
+}
+.btn-cyber:hover {
+  background: var(--clr-cyan);
+  color: var(--clr-bg-deep);
+  box-shadow: var(--glow-cyan);
+}
+.btn-cyber:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.btn-cyber.danger {
+  border-color: var(--clr-red);
+  color: var(--clr-red);
+}
+.btn-cyber.danger:hover {
+  background: var(--clr-red);
+  color: #fff;
+}
