@@ -1,0 +1,82 @@
+.panel {
+  background: var(--clr-bg-panel);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--clr-text-muted);
+}
+
+.body {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.hint {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--clr-text-muted);
+  line-height: 1.5;
+}
+
+.inputRow {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.input {
+  flex: 1;
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  color: var(--clr-text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 0.55rem 0.9rem;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.input:focus {
+  border-color: var(--clr-magenta);
+  box-shadow: var(--glow-magenta);
+}
+
+.input::placeholder { color: var(--clr-text-muted); }
+
+.result {
+  background: rgba(255, 0, 160, 0.05);
+  border: 1px solid var(--clr-magenta-dim);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+}
+
+.resultLabel {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  color: var(--clr-magenta);
+  margin-bottom: 0.35rem;
+}
+
+.resultText {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--clr-text-primary);
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
