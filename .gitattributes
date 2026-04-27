@@ -1,0 +1,6 @@
+# GitHub Linguist — only count TypeScript and Python as project languages
+* linguist-detectable=false
+
+*.py  linguist-detectable=true
+*.ts  linguist-detectable=true
+*.tsx linguist-detectable=true
