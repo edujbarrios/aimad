@@ -1,4 +1,4 @@
-# AIMAD — *pronounced: e y e mad*
+# AIMAD
 
 > **"Jarvis from Iron Man isn't science fiction anymore, I'm building it from scratch ;)"**
 
@@ -77,6 +77,39 @@ npm run dev
 ```
 
 Frontend will be at `http://localhost:5173`.
+
+---
+
+### Run Everything at Once (Recommended)
+
+Start both backend and frontend with a **single command** from the project root.
+
+#### Option A — `npm run dev` (Node-based, cross-platform)
+
+```bash
+# One-time setup: installs concurrently
+npm install
+
+# Start both services in parallel
+npm run dev
+```
+
+Backend logs appear in **cyan**, frontend logs in **magenta**. `Ctrl+C` stops both.
+
+| Script | Action |
+|---|---|
+| `npm run dev` | Start backend + frontend together |
+| `npm run dev:backend` | Backend only |
+| `npm run dev:frontend` | Frontend only |
+| `npm run setup` | Install all deps (frontend npm + backend pip) |
+
+#### Option B — `.\dev.ps1` (Windows PowerShell, no Node required)
+
+```powershell
+.\dev.ps1
+```
+
+Runs both services as background jobs with color-coded output. `Ctrl+C` shuts them both down cleanly.
 
 ---
 
