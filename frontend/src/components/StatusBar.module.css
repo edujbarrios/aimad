@@ -1,0 +1,37 @@
+.bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius);
+  border: 1px solid;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* States */
+.online  { border-color: var(--clr-green); color: var(--clr-green); }
+.online .dot { background: var(--clr-green); box-shadow: 0 0 6px var(--clr-green); animation: blink 2s infinite; }
+
+.offline { border-color: var(--clr-red);   color: var(--clr-red); }
+.offline .dot { background: var(--clr-red); }
+
+.connecting { border-color: var(--clr-gold); color: var(--clr-gold); }
+.connecting .dot { background: var(--clr-gold); animation: blink 0.7s infinite; }
+
+.latency {
+  color: var(--clr-text-muted);
+  margin-left: 0.25rem;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
