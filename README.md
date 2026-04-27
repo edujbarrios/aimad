@@ -1,5 +1,4 @@
 # AIMAD
-### pronounced: *e y e mad*
 
 > *"Jarvis from Iron Man isn't science fiction anymore, I'm building it from scratch ;)"*
 
