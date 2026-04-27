@@ -1,0 +1,122 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  background: var(--clr-bg-panel);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  height: 100%;
+}
+
+.header {
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--clr-text-muted);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1rem 1.25rem;
+  flex: 1;
+}
+
+/* Drop zone */
+.dropzone {
+  border: 2px dashed var(--clr-border);
+  border-radius: var(--radius-lg);
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  overflow: hidden;
+  position: relative;
+}
+
+.dropzone:hover {
+  border-color: var(--clr-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+.hasPreview {
+  border-style: solid;
+  border-color: var(--clr-cyan-dim);
+}
+
+.dropText {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--clr-text-muted);
+  text-align: center;
+  padding: 1rem;
+}
+
+.preview {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-height: 220px;
+}
+
+.fileInput {
+  display: none;
+}
+
+/* Prompt textarea */
+.promptInput {
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  color: var(--clr-text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.55rem 0.9rem;
+  resize: vertical;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  line-height: 1.5;
+}
+
+.promptInput:focus {
+  border-color: var(--clr-cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+.promptInput::placeholder {
+  color: var(--clr-text-muted);
+}
+
+/* Insight */
+.insightBox {
+  background: rgba(0, 245, 255, 0.04);
+  border: 1px solid var(--clr-cyan-dim);
+  border-radius: var(--radius);
+  padding: 0.8rem 1rem;
+}
+
+.insightLabel {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  color: var(--clr-cyan);
+  margin-bottom: 0.4rem;
+}
+
+.insightText {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--clr-text-primary);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
