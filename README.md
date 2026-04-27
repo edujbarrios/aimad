@@ -1,132 +1,54 @@
 # AIMAD
 
+> *"Jarvis from Iron Man isn't science fiction anymore, I'm building it from scratch ;)"*
 
 > [!CAUTION]
-> **AIMAD is in active development.** APIs, architecture, and interfaces may change at any time without prior notice. Versions are not guaranteed to be stable. Use in production at your own risk.
+> **Active development.** APIs, architecture, and interfaces may change at any time. Not production-stable.
 
 ---
 
-## Vision
+## What is AIMAD?
 
-AIMAD is a personal AI assistant inspired by Jarvis from Iron Man, built entirely from scratch with a strong software architecture, clean design patterns, modularity, and future scalability in mind.
+A personal AI assistant built from scratch — offline voice I/O, LLM reasoning, image analysis, and a cyberpunk React UI. Designed with clean architecture and swappable components so every piece can evolve independently.
 
-The assistant is capable of:
-- Understanding **voice commands offline**
-- **Speaking back** using offline TTS (pyttsx3)
-- Connecting to **LLM APIs** for reasoning and execution (LLM7.io and others)
-- **Understanding uploaded images / screenshots** and providing contextual insights
-- Interpreting image content through the AI pipeline and responding with **both text and voice output**
-- Future support for **tool calling** and advanced agent workflows
+**Author:** Eduardo J. Barrios — [@edujbarrios](https://github.com/edujbarrios)
 
 ---
 
 ## Tech Stack
 
-| Layer      | Technology                          |
-|------------|-------------------------------------|
-| Backend    | Python 3.11+, FastAPI, pyttsx3      |
-| LLM        | LLM7.io API (OpenAI-compatible)     |
-| Voice STT  | SpeechRecognition + pocketsphinx / Whisper (offline) |
-| TTS        | pyttsx3 (offline)                   |
-| Image AI   | OpenAI Vision / LLaVA via adapter   |
-| Frontend   | TypeScript, React 18, Vite          |
-| Styling    | Tailwind CSS (cyberpunk dark theme) |
-| Comms      | REST API (FastAPI ↔ React)          |
+| Layer      | Technology                                       |
+|------------|--------------------------------------------------|
+| Backend    | Python 3.11+, FastAPI 0.111                      |
+| LLM        | LLM7.io (OpenAI-compatible adapter)              |
+| STT        | SpeechRecognition + pocketsphinx (offline)       |
+| TTS        | pyttsx3 (offline)                                |
+| Image AI   | Vision API via LLM adapter                       |
+| Frontend   | TypeScript, React 18, Vite                       |
+| Styling    | CSS Modules — cyberpunk dark theme               |
 
 ---
 
-## Setup Instructions
+## Quick Start
 
-### Clone the Repository
+### 1. Clone
 
 ```bash
 git clone https://github.com/edujbarrios/aimad.git
 cd aimad
 ```
 
-### Prerequisites
-- Python 3.11+
-- Node.js 18+
-- pip / venv
-- npm or pnpm
-
----
-
-### Backend Setup
+### 2. Configure environment
 
 ```bash
-cd backend
-python -m venv .venv
-# Windows
-.venv\Scripts\activate
-# macOS/Linux
-source .venv/bin/activate
-
-pip install -r requirements.txt
-cp .env.example .env
-# Fill in your API keys in .env
-
-uvicorn main:app --reload --port 8000
+cp backend/.env.example backend/.env
+# Edit backend/.env and fill in your API keys
 ```
 
-The API will be available at `http://localhost:8000`.
-Swagger docs at `http://localhost:8000/docs`.
-
----
-
-### Frontend Setup
-
-```bash
-cd frontend
-npm install
-cp .env.example .env.local
-npm run dev
-```
-
-Frontend will be at `http://localhost:5173`.
-
----
-
-### Run Everything at Once (Recommended)
-
-Start both backend and frontend with a **single command** from the project root.
-
-#### Option A — `npm run dev` (Node-based, cross-platform)
-
-```bash
-# One-time setup: installs concurrently
-npm install
-
-# Start both services in parallel
-npm run dev
-```
-
-Backend logs appear in **cyan**, frontend logs in **magenta**. `Ctrl+C` stops both.
-
-| Script | Action |
-|---|---|
-| `npm run dev` | Start backend + frontend together |
-| `npm run dev:backend` | Backend only |
-| `npm run dev:frontend` | Frontend only |
-| `npm run setup` | Install all deps (frontend npm + backend pip) |
-
-#### Option B — `.\dev.ps1` (Windows PowerShell, no Node required)
-
-```powershell
-.\dev.ps1
-```
-
-Runs both services as background jobs with color-coded output. `Ctrl+C` shuts them both down cleanly.
-
----
-
-## Environment Variables
-
-### Backend (`backend/.env`)
-
+**`backend/.env`**
 ```
 LLM_PROVIDER=llm7
-LLM7_API_KEY=your_llm7_api_key_here
+LLM7_API_KEY=your_api_key
 LLM7_BASE_URL=https://api.llm7.io/v1
 LLM7_MODEL=gpt-4o
 TTS_ENGINE=pyttsx3
@@ -135,198 +57,129 @@ UPLOAD_DIR=uploads
 MAX_UPLOAD_SIZE_MB=10
 ```
 
-### Frontend (`frontend/.env.local`)
-
+**`frontend/.env.local`** *(optional — defaults to localhost:8000)*
 ```
 VITE_API_BASE_URL=http://localhost:8000
 ```
 
+### 3. Run
+
+**Single command (recommended):**
+
+```bash
+npm install      # installs concurrently once
+npm run dev      # starts backend + frontend in parallel
+```
+
+| Script | Action |
+|---|---|
+| `npm run dev` | Backend + frontend together |
+| `npm run dev:backend` | Backend only |
+| `npm run dev:frontend` | Frontend only |
+| `npm run setup` | Install all deps (pip + npm) |
+
+**Or with PowerShell (no Node required):**
+
+```powershell
+.\dev.ps1
+```
+
+Both options give colour-coded logs. `Ctrl+C` stops everything.
+
+**Manual setup** (if you prefer separate terminals):
+
+```bash
+# Backend
+cd backend && python -m venv .venv && .venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
+
+# Frontend (separate terminal)
+cd frontend && npm install && npm run dev
+```
+
+- Backend: `http://localhost:8000` · Swagger: `http://localhost:8000/docs`
+- Frontend: `http://localhost:5173`
+
 ---
 
-## Architecture Overview
+## Architecture
 
 ```
 AIMAD/
 ├── backend/
-│   ├── main.py                  # FastAPI entry point
-│   ├── requirements.txt
-│   ├── .env.example
-│   ├── api/
-│   │   └── routes/              # All route modules
-│   ├── services/                # Business logic (Service Layer)
-│   ├── adapters/                # LLM provider adapters (Adapter Pattern)
-│   ├── commands/                # Voice command handlers (Command Pattern)
-│   ├── models/                  # Pydantic request/response models
-│   ├── config/                  # Config & env loading (Repository/Config Layer)
-│   └── utils/                   # Shared utilities
-│
+│   ├── main.py              # FastAPI entry point
+│   ├── api/routes/          # Endpoint handlers
+│   ├── services/            # Business logic
+│   ├── adapters/            # LLM provider adapters
+│   ├── commands/            # Voice command handlers
+│   ├── models/              # Pydantic schemas
+│   ├── config/              # Environment & settings
+│   └── utils/               # Shared utilities
 └── frontend/
-    ├── src/
-    │   ├── components/          # Reusable UI components
-    │   ├── pages/               # Page-level views
-    │   ├── services/            # API client (frontend service layer)
-    │   ├── hooks/               # Custom React hooks
-    │   ├── layouts/             # Layout wrappers
-    │   └── theme/               # Cyberpunk theme tokens
-    └── public/
+    └── src/
+        ├── components/      # UI components
+        ├── pages/           # Page views
+        ├── hooks/           # Custom React hooks
+        ├── services/        # API client
+        ├── layouts/         # Layout wrappers
+        └── theme/           # CSS design tokens
 ```
 
----
+### Design Patterns
 
-## Design Patterns Used
-
-| Pattern              | Where Applied                                      |
-|----------------------|----------------------------------------------------|
-| **Adapter Pattern**  | LLM providers (`adapters/`) — swap LLM7, OpenAI, Ollama with no core changes |
-| **Strategy Pattern** | TTS engines and STT engines — pluggable at runtime |
-| **Command Pattern**  | Voice commands — each command is an encapsulated object |
-| **Factory Pattern**  | Provider initialization — `LLMProviderFactory`     |
-| **Service Layer**    | All business logic isolated in `services/`         |
-| **Repository/Config**| Environment & API key management in `config/`      |
-| **Observer/Event**   | Assistant event bus for async state propagation    |
-
----
-
-## Image Understanding Workflow
-
-```
-User uploads image / screenshot
-        ↓
-Frontend → POST /api/image/analyze
-        ↓
-ImageService.analyze(image_bytes, prompt)
-        ↓
-LLMAdapter.analyze_image(base64_image, prompt)
-        ↓
-LLM returns text insight
-        ↓
-[Optional] TTSService.speak(insight_summary)
-        ↓
-Frontend displays insight + plays audio response
-```
-
-Supported inputs:
-- Screenshots (UI, desktop, web)
-- Photos
-- Documents / scanned pages
-- Diagrams & charts
-
----
-
-## Voice + TTS Workflow
-
-```
-User presses voice button or uses wake word
-        ↓
-STTStrategy.listen() → transcribed text
-        ↓
-CommandParser.parse(text) → VoiceCommand object
-        ↓
-CommandExecutor.execute(command) → result
-        ↓
-TTSStrategy.speak(result)
-        ↓
-[If LLM needed] → LLMAdapter.complete(prompt)
-```
+| Pattern | Applied in |
+|---|---|
+| **Adapter** | `adapters/` — swap LLM providers with no core changes |
+| **Strategy** | TTS + STT engines — pluggable at runtime |
+| **Command** | `commands/` — each voice intent is an encapsulated object |
+| **Factory** | `LLMProviderFactory` — provider instantiation |
+| **Service Layer** | All business logic in `services/` |
+| **Repository/Config** | Env & key management in `config/` |
+| **Observer/Event bus** | `utils/events.py` — async state propagation |
 
 ---
 
 ## API Endpoints
 
-| Method | Endpoint                 | Description                        |
-|--------|--------------------------|------------------------------------|
-| GET    | `/health`                | Health check                       |
-| POST   | `/api/llm/prompt`        | Send prompt to LLM                 |
-| POST   | `/api/voice/command`     | Execute a voice command            |
-| POST   | `/api/tts/speak`         | Trigger TTS for given text         |
-| POST   | `/api/image/analyze`     | Upload image + get AI insight      |
-| POST   | `/api/assistant/orchestrate` | Full assistant orchestration   |
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/health` | Health check |
+| POST | `/api/llm/prompt` | Send prompt to LLM |
+| POST | `/api/voice/command` | Execute a voice command |
+| POST | `/api/tts/speak` | Trigger TTS |
+| POST | `/api/image/analyze` | Upload image + get AI insight |
+| POST | `/api/assistant/orchestrate` | Full assistant orchestration |
 
 ---
 
-## Roadmap / TODO
+## Roadmap
 
-### Near-term
-- [ ] Improve offline voice recognition accuracy
-- [ ] Add wake word detection (e.g., "Hey AIMAD")
-- [ ] Add conversation memory / context retention
-- [ ] Improve image analysis (OCR, diagram interpretation)
-- [ ] Expand TTS voices and speed controls
-
-### Experimental APIs
-- [ ] Tool calling support (function calling via LLM)
-- [ ] Web search tool integration
-- [ ] Calendar & reminder tool
-- [ ] Code execution tool (sandboxed)
-
-### LLM Connectivity
-- [ ] Add Ollama adapter (fully local LLM)
-- [ ] Add Anthropic Claude adapter
-- [ ] Add Google Gemini adapter
-- [ ] Dynamic model routing (cheapest/fastest/best based on task)
-
-### Multimodal & Memory
+- [ ] Wake word detection ("Hey AIMAD")
+- [ ] Conversation memory / context retention
+- [ ] Ollama adapter (fully local LLM)
+- [ ] Anthropic Claude + Google Gemini adapters
+- [ ] Dynamic model routing (cheapest / fastest / best)
+- [ ] Local vector memory / RAG (ChromaDB or Qdrant)
+- [ ] Tool calling — web search, calendar, code execution
+- [ ] Automation workflows (voice → open apps, control browser)
+- [ ] Docker + CI/CD
 - [ ] Multimodal memory (remember past images/interactions)
-- [ ] Local vector memory / RAG with ChromaDB or Qdrant
-- [ ] Persistent session context across restarts
-
-### Automation
-- [ ] Automation workflow builder
-- [ ] Trigger actions from voice commands (open apps, control browser, etc.)
-- [ ] Webhook / integration support
-
-### Infrastructure
-- [ ] Docker support
-- [ ] CI/CD pipeline
-- [ ] Configuration UI for managing API keys + settings
 
 ---
 
 ## Contributing
 
-AIMAD is **fully open source** — contributions are welcome and encouraged!
+AIMAD is open source — all contributions welcome.
 
-Whether you want to add a new LLM adapter, improve the voice pipeline, build a new frontend component, fix a bug, or extend the roadmap — all PRs are appreciated.
-
-### How to contribute
-
-1. **Fork** the repository
-2. **Create a branch** for your feature or fix: `git checkout -b feat/my-feature`
-3. **Make your changes** — follow the existing architecture and design patterns
-4. **Commit** with clear, small messages (see commit style in this repo)
-5. **Push** and open a **Pull Request** against `main`
-
-### Guidelines
-- Follow the existing design patterns (Adapter, Strategy, Command, Factory, Service Layer)
-- Keep commits small and descriptive
-- Never hardcode secrets — use `.env` and `.env.example`
-- Keep backend (Python/FastAPI) and frontend (TypeScript/React) cleanly separated
-- If adding a new LLM provider, implement `LLMAdapter` and register it in `LLMProviderFactory`
-- If adding a new TTS/STT engine, implement the corresponding Strategy interface
-
-### Ideas for contributions
-- New LLM provider adapters (Ollama, Anthropic, Gemini…)
-- Improved offline voice recognition (Whisper local)
-- Wake word detection
-- RAG / local vector memory integration
-- Docker + deployment configs
-- UI themes and components
-- Tool calling implementations
-- Automation workflows
-
-All contributors will be credited. Let's build Jarvis together.
+1. Fork the repo
+2. `git checkout -b feat/your-feature`
+3. Follow the existing patterns (Adapter, Strategy, Command, Service Layer)
+4. Keep commits small and descriptive; never hardcode secrets
+5. Open a PR against `main`
 
 ---
 
 ## License
 
-GNU Affero General Public License v3.0 (AGPL-3.0) — open source with strong copyleft.
-Any deployment over a network (SaaS, API service, etc.) must release the full source code.
-Commercial hosting requires explicit permission from the author. See [LICENSE](LICENSE) for full terms.
-
-
----
-
-*AIMAD — because Jarvis was always possible.*
-
-**Author:** Eduardo J. Barrios — [@edujbarrios](https://github.com/edujbarrios)
+GNU AGPL v3.0 — strong copyleft. Any network deployment must release source code. Commercial hosting requires explicit permission. See [LICENSE](LICENSE).

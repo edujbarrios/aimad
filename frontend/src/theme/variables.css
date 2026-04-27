@@ -36,4 +36,12 @@
   --radius:        4px;
   --radius-lg:     8px;
   --transition:    150ms ease;
+
+  /* ── Aliases (--color-* maps to --clr-*) ──────────────────────────────── */
+  --color-cyan:        var(--clr-cyan);
+  --color-magenta:     var(--clr-magenta);
+  --color-gold:        var(--clr-gold);
+  --color-green:       var(--clr-green);
+  --color-red:         var(--clr-red);
+  --color-text-primary: var(--clr-text-primary);
 }

@@ -1,0 +1,52 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  user-select: none;
+}
+
+.canvas {
+  display: block;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.3));
+  transition: filter 0.3s ease;
+}
+
+.canvas.active {
+  filter: drop-shadow(0 0 16px rgba(0, 255, 255, 0.6));
+}
+
+.statusLabel {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--color-cyan);
+  color: var(--color-cyan);
+  opacity: 0.7;
+  text-transform: uppercase;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.statusLabel.thinking {
+  color: var(--color-gold);
+  border-color: var(--color-gold);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.statusLabel.speaking {
+  color: var(--color-magenta);
+  border-color: var(--color-magenta);
+  animation: pulse 0.5s ease-in-out infinite;
+}
+
+.statusLabel.listening {
+  color: var(--color-green);
+  border-color: var(--color-green);
+  animation: pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
