@@ -313,7 +313,9 @@ All contributors will be credited. Let's build Jarvis together.
 
 ## License
 
-MIT License — free to use, modify, and distribute. See [LICENSE](LICENSE) for full terms.
+GNU Affero General Public License v3.0 (AGPL-3.0) — open source with strong copyleft.
+Any deployment over a network (SaaS, API service, etc.) must release the full source code.
+Commercial hosting requires explicit permission from the author. See [LICENSE](LICENSE) for full terms.
 
 ---
 
