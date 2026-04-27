@@ -275,9 +275,45 @@ TTSStrategy.speak(result)
 
 ---
 
+## Contributing
+
+AIMAD is **fully open source** — contributions are welcome and encouraged!
+
+Whether you want to add a new LLM adapter, improve the voice pipeline, build a new frontend component, fix a bug, or extend the roadmap — all PRs are appreciated.
+
+### How to contribute
+
+1. **Fork** the repository
+2. **Create a branch** for your feature or fix: `git checkout -b feat/my-feature`
+3. **Make your changes** — follow the existing architecture and design patterns
+4. **Commit** with clear, small messages (see commit style in this repo)
+5. **Push** and open a **Pull Request** against `main`
+
+### Guidelines
+- Follow the existing design patterns (Adapter, Strategy, Command, Factory, Service Layer)
+- Keep commits small and descriptive
+- Never hardcode secrets — use `.env` and `.env.example`
+- Keep backend (Python/FastAPI) and frontend (TypeScript/React) cleanly separated
+- If adding a new LLM provider, implement `LLMAdapter` and register it in `LLMProviderFactory`
+- If adding a new TTS/STT engine, implement the corresponding Strategy interface
+
+### Ideas for contributions
+- New LLM provider adapters (Ollama, Anthropic, Gemini…)
+- Improved offline voice recognition (Whisper local)
+- Wake word detection
+- RAG / local vector memory integration
+- Docker + deployment configs
+- UI themes and components
+- Tool calling implementations
+- Automation workflows
+
+All contributors will be credited. Let's build Jarvis together.
+
+---
+
 ## License
 
-MIT — build freely, credit appreciated.
+MIT License — free to use, modify, and distribute. See [LICENSE](LICENSE) for full terms.
 
 ---
 
