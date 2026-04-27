@@ -1,7 +1,5 @@
 # AIMAD
 
-> **"Jarvis from Iron Man isn't science fiction anymore, I'm building it from scratch ;)"**
-
 **Author:** Eduardo J. Barrios — [@edujbarrios](https://github.com/edujbarrios)
 
 ---
@@ -36,6 +34,13 @@ The assistant is capable of:
 ---
 
 ## Setup Instructions
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/edujbarrios/aimad.git
+cd aimad
+```
 
 ### Prerequisites
 - Python 3.11+
