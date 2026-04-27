@@ -1,6 +1,8 @@
 # AIMAD
 
-**Author:** Eduardo J. Barrios — [@edujbarrios](https://github.com/edujbarrios)
+
+> [!CAUTION]
+> **AIMAD is in active development.** APIs, architecture, and interfaces may change at any time without prior notice. Versions are not guaranteed to be stable. Use in production at your own risk.
 
 ---
 
@@ -322,6 +324,9 @@ GNU Affero General Public License v3.0 (AGPL-3.0) — open source with strong co
 Any deployment over a network (SaaS, API service, etc.) must release the full source code.
 Commercial hosting requires explicit permission from the author. See [LICENSE](LICENSE) for full terms.
 
+
 ---
 
 *AIMAD — because Jarvis was always possible.*
+
+**Author:** Eduardo J. Barrios — [@edujbarrios](https://github.com/edujbarrios)
